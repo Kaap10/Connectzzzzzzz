@@ -105,6 +105,58 @@ const JobListing = ({ isLoggedIn, onLogout, currentUser }) => {
     return count;
   }
 
+  // Fake jobs to display if no jobs are found
+  const fakeJobs = [
+    {
+      id: 'fake1',
+      title: 'Frontend Developer Intern',
+      companyName: 'TechNova Solutions',
+      locations: 'Bangalore',
+      workplaceType: 'On-site',
+      opportunityType: 'Internship',
+      salary: { currency: '₹', type: 'per month', minAmount: 15000, maxAmount: 20000 },
+      postedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+      isOpen: true,
+      applicationLink: '#',
+    },
+    {
+      id: 'fake2',
+      title: 'Backend Engineer',
+      companyName: 'FinEdge Bank',
+      locations: 'Mumbai',
+      workplaceType: 'Hybrid',
+      opportunityType: 'Full Time',
+      salary: { currency: '₹', type: 'per annum', minAmount: 600000, maxAmount: 900000 },
+      postedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+      isOpen: true,
+      applicationLink: '#',
+    },
+    {
+      id: 'fake3',
+      title: 'Marketing Associate',
+      companyName: 'EduSpark',
+      locations: 'Delhi',
+      workplaceType: 'Remote',
+      opportunityType: 'Part Time',
+      salary: { currency: '₹', type: 'per month', minAmount: 10000, maxAmount: 15000 },
+      postedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+      isOpen: true,
+      applicationLink: '#',
+    },
+    {
+      id: 'fake4',
+      title: 'Data Analyst',
+      companyName: 'HealthFirst Analytics',
+      locations: 'Hyderabad',
+      workplaceType: 'On-site',
+      opportunityType: 'Full Time',
+      salary: { currency: '₹', type: 'per annum', minAmount: 500000, maxAmount: 700000 },
+      postedAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
+      isOpen: true,
+      applicationLink: '#',
+    },
+  ];
+
   return (
     <Layout isLoggedIn={isLoggedIn} onLogout={onLogout} currentUser={currentUser}>
       <div className="container mx-auto py-6 bg-gray-50">
@@ -171,35 +223,9 @@ const JobListing = ({ isLoggedIn, onLogout, currentUser }) => {
               </div>
             ) : (
               <div>
-                {jobs.length > 0 ? (
-                  jobs.map(job => (
-                    <JobCard key={job.id} job={job} />
-                  ))
-                ) : (
-                  <div className="text-center py-12 bg-white rounded-lg shadow-sm">
-                    <h3 className="text-lg font-medium text-gray-800">No jobs found</h3>
-                    <p className="text-gray-600 mb-4">Try adjusting your filters or search criteria to find more opportunities</p>
-                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                      <button 
-                        onClick={() => {
-                          setActiveFilters({});
-                          setSearchQuery('');
-                        }}
-                        className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
-                      >
-                        Clear All Filters
-                      </button>
-                      {isLoggedIn && (
-                        <button 
-                          onClick={handlePostJob}
-                          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-                        >
-                          Post the First Job
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                )}
+                {(jobs.length > 0 ? jobs : fakeJobs).map(job => (
+                  <JobCard key={job.id} job={job} />
+                ))}
               </div>
             )}
           </div>
