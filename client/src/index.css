@@ -28,6 +28,12 @@ body {
   min-height: 100vh;
 }
 
+/* Tailwind dark mode support */
+html.dark body {
+  background: #1F2937; /* Tailwind 'dark' color */
+  color: #f3f4f6;      /* Tailwind 'gray-100' */
+}
+
 @layer base {
   h1 {
     @apply text-3xl font-bold;
