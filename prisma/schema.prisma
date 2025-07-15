@@ -1,0 +1,136 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique
+  password  String
+  messagesSent     Message[] @relation("SenderMessages")
+  messagesReceived Message[] @relation("ReceiverMessages")
+  jobsPosted       Job[]     @relation("JobPoster")
+  resources        Resource[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Message {
+  id          String    @id @default(uuid())
+  content     String
+  isAnonymous Boolean   @default(false)
+  seen        Boolean   @default(false)
+  timestamp   DateTime  @default(now())
+  senderId    String?
+  receiverId  String
+  sender      User?     @relation("SenderMessages", fields: [senderId], references: [id])
+  receiver    User      @relation("ReceiverMessages", fields: [receiverId], references: [id])
+
+  @@index([senderId])
+  @@index([receiverId])
+}
+
+model AnonymousMessage {
+  id        String    @id @default(uuid())
+  content   String
+  guestId   String    // Identifier for the anonymous user
+  timestamp DateTime  @default(now())
+
+  @@index([timestamp])
+}
+
+// Job Posting Models
+model Job {
+  id                  Int      @id @default(autoincrement())
+  title               String
+  companyName         String
+  companyWebsite      String?
+  companyDescription  String?
+  contactName         String
+  contactEmail        String
+  contactPhone        String?
+  description         String
+  locations           String
+  locationType        String   @default("On-site")
+  industry            String?
+  workplaceType       String
+  opportunityType     String
+  postedBy            String   // User ID who posted the job
+  user                User     @relation("JobPoster", fields: [postedBy], references: [id])
+  salary              Salary?
+  requirements        Requirements?
+  postedAt            DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  isOpen              Boolean  @default(true)
+
+  @@index([postedBy])
+}
+
+model Salary {
+  id         Int     @id @default(autoincrement())
+  currency   String  @default("INR")
+  type       String  @default("per year")
+  minAmount  Float?
+  maxAmount  Float?
+  job        Job     @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  jobId      Int     @unique
+}
+
+model Requirements {
+  id                       Int      @id @default(autoincrement())
+  skills                   String?
+  minExperience            Int?
+  maxExperience            Int?
+  education                String?
+  applicationDeadline      DateTime?
+  applicationMethod        String
+  applicationEmail         String?
+  applicationUrl           String?
+  applicationLink          String   // Required field for direct application link
+  applicationInPersonDetails String?
+  job                      Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  jobId                    Int      @unique
+}
+
+// Resource Sharing Models
+model Category {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  imageUrl    String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  resources   Resource[]
+}
+
+model Resource {
+  id           Int       @id @default(autoincrement())
+  title        String
+  description  String?
+  fileUrl      String
+  fileType     String
+  thumbnailUrl String?
+  publicId     String
+  year         Int
+  size         String?
+  downloadCount Int      @default(0)
+  userId       String
+  categoryId   Int
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category     Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+}
