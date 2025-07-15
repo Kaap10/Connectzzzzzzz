@@ -1,118 +1,125 @@
-# GLB.Connect
+# Connectzzzzzzz
 
-GLB.Connect is a real-time platform designed to bridge the gap between junior and senior college students, facilitating knowledge sharing and mentorship within the academic community.
+A full-stack platform for peer connection, job listings, resource sharing, and real-time messaging. Built with React (Vite) frontend and Node.js/Express backend, using MongoDB for data storage.
 
-## 🌟 Features
+---
 
-### 1. Real-time Messaging
-- Direct messaging between students
-- Instant notifications
-- Message history and chat persistence
-- Rich text support
+## Features
 
-### 2. Anonymous Chat
-- Post questions anonymously
-- Get honest feedback and advice
-- Safe space for sensitive queries
-- Moderated environment
+- **User Authentication**: Register, login, and manage profiles securely.
+- **Job Listings**: Browse, filter, and post job opportunities.
+- **Resource Sharing**: Upload, browse, and categorize study resources.
+- **Real-Time Chat**: Instant messaging with Socket.io.
+- **AI Assistant**: Integrated AI features (see `AI.jsx`).
+- **Anonymous Posting**: Post and view anonymous messages.
 
-### 3. User Profiles
-- Customizable student profiles
-- Academic background display
-- Areas of expertise
-- Contact information
+---
 
-### 4. Authentication & Security
-- Secure JWT-based authentication
-- Protected routes
-- Password encryption
-- Session management
+## Project Structure
 
-## 🛠️ Tech Stack
+```
+Connectzzzzzzz/
+├── client/         # Frontend (React + Vite)
+├── src/            # Backend (Node.js/Express)
+├── DB/             # MongoDB config
+├── prisma/         # (Optional) Prisma ORM files
+├── uploads/        # Uploaded files (auto-generated)
+├── server.js       # Backend entry point
+├── ...             # Deployment/config files
+```
 
-### Frontend
-- React.js
-- Tailwind CSS
-- Socket.io-client
-- React Router DOM
+---
 
-### Backend
-- Node.js
-- Express.js
-- Socket.io
-- Prisma ORM
-- JSON Web Tokens
-
-### Database
-- PostgreSQL
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
-- Node.js (v14 or higher)
+- Node.js (v18+ recommended)
 - npm or yarn
-- PostgreSQL
+- MongoDB Atlas (or local MongoDB)
 
-### Installation
-
-1. Clone the repository
+### 1. Clone the Repository
 ```bash
-git clone https://github.com/Kshitij2145/GLB.CONNECT.git
-cd GLB.CONNECT
+git clone <your-repo-url>
+cd Connectzzzzzzz
 ```
 
-2. Install backend dependencies
+### 2. Setup Environment Variables
+Create a `.env` file in the root and in `client/` as needed. Example:
+
+**Backend (`.env`):**
+```
+MONGODB_URI=your_mongodb_connection_string
+PORT=5000
+JWT_SECRET=your_jwt_secret
+```
+
+**Frontend (`client/.env`):**
+```
+VITE_API_URL=https://your-backend-url.com
+```
+
+### 3. Install Dependencies
+
+**Backend:**
 ```bash
-cd QNA\ Threads
 npm install
 ```
 
-3. Install frontend dependencies
+**Frontend:**
 ```bash
 cd client
 npm install
 ```
 
-4. Set up environment variables
-Create a `.env` file in the root directory with:
-```env
-DATABASE_URL="your-postgresql-url"
-JWT_SECRET="your-jwt-secret"
+### 4. Run Locally
+
+**Backend:**
+```bash
+npm start
 ```
 
-5. Run database migrations
+**Frontend:**
 ```bash
-npx prisma migrate dev
-```
-
-6. Start the development servers
-
-Backend:
-```bash
-npm run server
-```
-
-Frontend:
-```bash
-cd client
 npm run dev
 ```
 
-## 🏫 Supported Institutions
-- GL Bajaj
-- Galgotia
-- NIET
-- Jamia
-- Bennett
+---
 
-## 🤝 Contributing
-Contributions are welcome! Please feel free to submit a Pull Request.
+## Deployment
 
-## 📝 License
-This project is licensed under the ISC License.
+### Frontend (Vercel)
+- Deploy the `client/` directory as a Vite/React app on [Vercel](https://vercel.com/).
+- Set environment variables in the Vercel dashboard.
 
+### Backend (Render/Railway/Heroku)
+- Deploy the root project (with `server.js`) to [Render](https://render.com/), [Railway](https://railway.app/), or [Heroku](https://heroku.com/).
+- Set environment variables in the platform dashboard.
 
-## 🙏 Acknowledgments
-- Special thanks to all contributors and testers
-- Inspired by the need for better academic mentorship
-- Built with ❤️ for the student community 
+### Database
+- Use [MongoDB Atlas](https://www.mongodb.com/atlas) or another managed MongoDB provider.
+
+---
+
+## Folder Details
+
+- `client/` - React frontend (components, pages, services, assets)
+- `src/` - Express backend (controllers, models, routes, sockets)
+- `DB/` - MongoDB config
+- `prisma/` - (Optional) Prisma ORM files
+- `uploads/` - Uploaded files (auto-generated, not tracked)
+
+---
+
+## Contributing
+
+1. Fork the repo
+2. Create your feature branch (`git checkout -b feature/YourFeature`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push to the branch (`git push origin feature/YourFeature`)
+5. Open a Pull Request
+
+---
+
+## License
+
+This project is licensed under the MIT License. 
